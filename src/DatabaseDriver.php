@@ -1703,7 +1703,6 @@ abstract class DatabaseDriver implements DatabaseInterface, DispatcherAwareInter
 	protected function quoteNameStr($strArr)
 	{
 		$parts = [];
-		$q     = $this->nameQuote;
 
 		foreach ($strArr as $part)
 		{
@@ -1712,14 +1711,7 @@ abstract class DatabaseDriver implements DatabaseInterface, DispatcherAwareInter
 				continue;
 			}
 
-			if (\strlen($q) === 1)
-			{
-				$parts[] = $q . $part . $q;
-			}
-			else
-			{
-				$parts[] = $q[0] . $part . $q[1];
-			}
+			$parts[] = quoteNameString($part, true);
 		}
 
 		return implode('.', $parts);
