@@ -250,7 +250,6 @@ abstract class DatabaseDriver implements DatabaseInterface, DispatcherAwareInter
                 $baseName = $file->getBasename();
 
                 // Derive the class name from the type.
-                /** @var DatabaseDriver $class */
                 $class = __NAMESPACE__ . '\\' . ucfirst(strtolower($baseName)) . '\\' . ucfirst(strtolower($baseName)) . 'Driver';
 
                 // If the class doesn't exist, or if it's not supported on this system, move on to the next type.
@@ -501,17 +500,12 @@ abstract class DatabaseDriver implements DatabaseInterface, DispatcherAwareInter
      *
      * @param   string  $dbName  The database name that will be altered
      *
-     * @return  boolean|resource
+     * @return  boolean
      *
      * @since   2.0.0
-     * @throws  \RuntimeException
      */
-    public function alterDbCharacterSet($dbName)
+    public function alterDbCharacterSet(string $dbName)
     {
-        if ($dbName === null) {
-            throw new \RuntimeException('Database name must not be null.');
-        }
-
         $this->setQuery($this->getAlterDbCharacterSet($dbName));
 
         return $this->execute();
@@ -523,7 +517,7 @@ abstract class DatabaseDriver implements DatabaseInterface, DispatcherAwareInter
      * @param   \stdClass  $options  Object used to pass user and database name to database driver. This object must have "db_name" and "db_user" set.
      * @param   boolean    $utf      True if the database supports the UTF-8 character set.
      *
-     * @return  boolean|resource
+     * @return  boolean
      *
      * @since   2.0.0
      * @throws  \RuntimeException
