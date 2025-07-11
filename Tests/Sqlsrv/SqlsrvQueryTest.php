@@ -48,14 +48,6 @@ class SqlsrvQueryTest extends TestCase
     /**
      * @testdox  A string is cast as a character string for the driver
      */
-    public function testCastAsChar()
-    {
-        $this->assertSame('CAST(foo as NVARCHAR(10))', $this->query->castAsChar('foo'));
-    }
-
-    /**
-     * @testdox  A string is cast as a character string for the driver
-     */
     public function testCastAsWithChar()
     {
         $this->assertSame('CAST(foo as NVARCHAR(10))', $this->query->castAs('CHAR', 'foo'));

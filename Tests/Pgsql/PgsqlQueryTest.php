@@ -48,14 +48,6 @@ class PgsqlQueryTest extends TestCase
     /**
      * @testdox  A string is cast as a character string for the driver
      */
-    public function testCastAsChar()
-    {
-        $this->assertSame('foo::text', $this->query->castAsChar('foo'));
-    }
-
-    /**
-     * @testdox  A string is cast as a character string for the driver
-     */
     public function testCastAsWithChar()
     {
         $this->assertSame('foo::text', $this->query->castAs('CHAR', 'foo'));
