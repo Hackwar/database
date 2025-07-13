@@ -308,9 +308,9 @@ class PgsqlImporterTest extends TestCase
                 new \SimpleXMLElement('<dump><database name=""><table_structure name="#__dbtest">' . $idSequence . '<field Field="id" Type="bigint" Null="NO" Default="nextval(\'jos_dbtest_id_seq\'::regclass)" Comments="" />' . $titleField . $idKey . '</table_structure></database></dump>'),
                 [
                     'ALTER TABLE "jos_dbtest" ALTER COLUMN "id"  TYPE bigint,
-    ALTER COLUMN "id" SET NOT NULL,
-    ALTER COLUMN "id" SET DEFAULT \'nextval(\'jos_dbtest_id_seq\'::regclass)\';
-    ALTER SEQUENCE "jos_dbtest_id_seq" OWNED BY "jos_dbtest.id"',
+ALTER COLUMN "id" SET NOT NULL,
+ALTER COLUMN "id" SET DEFAULT \'nextval(\'jos_dbtest_id_seq\'::regclass)\';
+ALTER SEQUENCE "jos_dbtest_id_seq" OWNED BY "jos_dbtest.id"',
                 ],
                 [],
             ],
@@ -354,13 +354,13 @@ class PgsqlImporterTest extends TestCase
     {
         return [
             'passes checks' => [
-                $this->createMock(PgsqlDriver::class),
+                PgsqlDriver::class,
                 '#__dbtest',
                 null,
             ],
 
             'fails checks with incorrect database driver subclass' => [
-                $this->createMock(DatabaseInterface::class),
+                DatabaseInterface::class,
                 new \SimpleXMLElement('<table_structure name="#__dbtest" />'),
                 'Database connection wrong type.',
             ],
@@ -372,7 +372,7 @@ class PgsqlImporterTest extends TestCase
             ],
 
             'fails checks with no tables' => [
-                $this->createMock(PgsqlDriver::class),
+                PgsqlDriver::class,
                 null,
                 'ERROR: No Tables Specified',
             ],
