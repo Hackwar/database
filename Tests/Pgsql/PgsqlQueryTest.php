@@ -8,6 +8,7 @@ namespace Joomla\Database\Tests\Pgsql;
 
 use Joomla\Database\DatabaseInterface;
 use Joomla\Database\Pgsql\PgsqlQuery;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -78,12 +79,14 @@ class PgsqlQueryTest extends TestCase
     /**
      * Data provider for concatenate test cases
      *
-     * @return  \Generator
+     * @return  array
      */
-    public function dataConcatenate(): \Generator
+    public static function dataConcatenate(): array
     {
-        yield 'values without separator' => [['foo', 'bar'], null, 'foo || bar'];
-        yield 'values with separator' => [['foo', 'bar'], ' and ', "foo || ' and ' || bar"];
+        return [
+            'values without separator' => [['foo', 'bar'], null, 'foo || bar'],
+            'values with separator' => [['foo', 'bar'], ' and ', "foo || ' and ' || bar"],
+        ];
     }
 
     /**
@@ -92,9 +95,8 @@ class PgsqlQueryTest extends TestCase
      * @param   string[]     $values     An array of values to concatenate.
      * @param   string|null  $separator  As separator to place between each value.
      * @param   string       $expected   The expected query string.
-     *
-     * @dataProvider  dataConcatenate
      */
+    #[DataProvider('dataConcatenate')]
     public function testConcatenate(array $values, ?string $separator, string $expected)
     {
         $this->db->expects($this->any())
@@ -217,12 +219,14 @@ class PgsqlQueryTest extends TestCase
     /**
      * Data provider for dateAdd test cases
      *
-     * @return  \Generator
+     * @return  array
      */
-    public function dataDateAdd(): \Generator
+    public static function dataDateAdd(): array
     {
-        yield 'date with positive interval' => ["'2019-10-13'", '1', 'DAY', "timestamp '2019-10-13' + interval '1 DAY'"];
-        yield 'date with negative interval' => ["'2019-10-13'", '-1', 'DAY', "timestamp '2019-10-13' - interval '1 DAY'"];
+        return [
+            'date with positive interval' => ["'2019-10-13'", '1', 'DAY', "timestamp '2019-10-13' + interval '1 DAY'"],
+            'date with negative interval' => ["'2019-10-13'", '-1', 'DAY', "timestamp '2019-10-13' - interval '1 DAY'"],
+        ];
     }
 
     /**
@@ -232,9 +236,8 @@ class PgsqlQueryTest extends TestCase
      * @param   string  $interval  The string representation of the appropriate number of units
      * @param   string  $datePart  The part of the date to perform the addition on
      * @param   string  $expected  The expected query string.
-     *
-     * @dataProvider  dataDateAdd
      */
+    #[DataProvider('dataDateAdd')]
     public function testDateAdd(string $date, string $interval, string $datePart, string $expected)
     {
         $this->assertSame(
