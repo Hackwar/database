@@ -1,10 +1,11 @@
 name: CI Joomla Framework
 
 on:
-    push:
-    pull_request:
     schedule:
         - cron: 15 2 * * 1
+    push:
+    pull_request:
+    workflow_dispatch:
 
 concurrency:
     group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
