@@ -1,10 +1,10 @@
 name: CI Joomla Framework
 
 on:
-    schedule:
-        - cron: 15 2 * * 1
     push:
     pull_request:
+    schedule:
+        - cron: 15 2 * * 1
     workflow_dispatch:
 
 concurrency:
